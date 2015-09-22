@@ -3,18 +3,73 @@
 /* global describe, it */
 
 var assert = require('assert')
+var compose = require('connect-composer')
 var Stats = require('../lib/stats')
 var test1 = require('./lib/test1')
 var test2 = require('./lib/test2')
 
 describe('stats', function () {
-  it('can wrap a middleware with arity 3', function () {
+  it('can wrap and run a middleware with arity 3', function (done) {
     var stats = new Stats()
-    debugger
+    var req = {}
+    var res = {}
     var mw = stats.from(test1.fix)
 
+    assert.ok(mw.stats)
+    assert.ok(!test1.fix.stats)
 
-    console.log(mw)
-    console.log(stats)
+    mw(req, res, function () {
+      assert.strictEqual(stats.data[test1.fix].count, 1)
+      done()
+    })
   })
+
+  it('can wrap and run a middleware with arity 4', function (done) {
+    var stats = new Stats()
+    var req = {}
+    var res = {}
+    var mw = stats.from(test1.err)
+
+    assert.ok(mw.stats)
+    assert.ok(!test1.fix.stats)
+
+    mw('bad', req, res, function () {
+      assert.deepEqual(res, { error: 'bad' })
+      assert.strictEqual(stats.data[test1.err].count, 1)
+      done()
+    })
+  })
+
+  it('can wrap and run a composed middleware', function (done) {
+    var stats = new Stats()
+    var req = {}
+    var res = {}
+    var fn = test1.nTimes(5, test1.fix)
+    var mw = stats.from(fn)
+
+    assert.ok(mw.stats)
+
+    mw(req, res, function () {
+      assert.strictEqual(stats.data[fn].count, 1)
+      done()
+    })
+  })
+
+  it.only('can add stats to a composed middleware', function (done) {
+    var stats = new Stats()
+    var req = {}
+    var res = {}
+    var mw = compose(test1.nTimes(5, test1.fix))
+    mw.options = { stats: stats.from.bind(stats) }
+
+    console.log(mw.stack)
+
+    mw(req, res, function () {
+      console.log(mw.stack)
+      console.log(stats.data)
+      // ~ assert.strictEqual(stats.data[fn].count, 1)
+      done()
+    })
+  })
+
 })

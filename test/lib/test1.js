@@ -20,10 +20,10 @@ module.exports = {
   },
 
   nTimes: function (times, fn) {
-    var comp
-
+    var comp = compose()
+debugger
     for (var i = 0; i < times; i++) {
-      comp = comp(fn)
+      comp = comp.push(fn)
     }
 
     return comp

@@ -53,6 +53,13 @@ describe('timer', function () {
       assert.deepEqual(obj, { count: 1, total: 5, min: 5, max: 5 })
     })
 
+    it('can update hrtimer array', function () {
+      var obj = {}
+      timer.update(obj, [ 5, 6955255 ])
+      timer.update(obj, [ 1, 31185 ])
+      assert.deepEqual(obj, { count: 2, total: 6006986440, min: 1000031185, max: 5006955255 })
+    })
+
     it('can update multiple times', function () {
       var obj = {}
       for (var i = 1; i <= 5; i++) {
