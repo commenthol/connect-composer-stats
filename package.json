@@ -19,7 +19,7 @@
     "standard": "latest"
   },
   "scripts": {
-    "test": "standard && mocha test/*.mocha.js",
+    "test": "mocha test/*.mocha.js",
     "cover": "istanbul cover _mocha --report lcov --report text -- -R dot --check-leaks test/*.mocha.js",
     "doc": "jsdox -o doc index.js lib/*.js",
     "lint": "standard",
