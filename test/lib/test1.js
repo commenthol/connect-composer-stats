@@ -9,7 +9,7 @@ module.exports = {
   fix: function (req, res, next) {
     setTimeout(function () {
       next && next()
-    }, 5)
+    }, 2)
   },
 
   rand: function (req, res, next) {
@@ -21,7 +21,7 @@ module.exports = {
 
   nTimes: function (times, fn) {
     var comp = compose()
-debugger
+
     for (var i = 0; i < times; i++) {
       comp = comp.push(fn)
     }
