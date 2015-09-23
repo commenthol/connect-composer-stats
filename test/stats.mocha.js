@@ -80,10 +80,10 @@ describe('stats', function () {
     mw.options = { stats: stats.from }
 
     mw(req, res, function () {
-      // ~ console.log(mw.stack)
-      // ~ console.log(stats.data)
-      // ~ assert.strictEqual(stats.data[test1.fix].count, 5)
-      stats.dump()
+      assert.strictEqual(stats.data[function2name(test1.fix).string].count, 5)
+      var filename = stats.dump()
+      assert.ok(filename)
+      console.log('check ' + filename + ' manually')
       done()
     })
   })

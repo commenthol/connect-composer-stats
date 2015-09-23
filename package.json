@@ -11,7 +11,7 @@
     "test": "test"
   },
   "dependencies": {
-    "function-inspector": "git+https://github.com/mheyse/node-function-inspector.git"
+    "function-inspector": "git+https://github.com/commenthol/node-function-inspector.git#v0.1.0"
   },
   "devDependencies": {
     "connect-composer": "^0.1.0",
