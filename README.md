@@ -136,7 +136,7 @@ The data object where the statistics for each function are stored
 
 **Example**
 
-```json
+```js
 { './example.js:16:19:mwG':
    { name: './example.js:16:19:mwG', // file, line, column and name of function called
      count: 3,                       // number of function calls
